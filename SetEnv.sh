@@ -21,13 +21,10 @@ cp $HOME/.termux/termux.properties $HOME/.termux/termux.properties.bak.$(date +%
 cp ~/../usr/etc/apt/sources.list ~/../usr/etc/apt/sources.list.$(date +%Y.%m.%d)
 
 apt install -y nano git zsh screenfetch neofetch openssh sshpass net-tools htop wget
-
 echo -e "deb https://packages-cf.termux.dev/apt/termux-main stable main\ndeb https://packages-cf.termux.dev/apt/termux-root root stable\ndeb https://packages-cf.termux.dev/apt/termux-x11 x11 main" > ~/../usr/etc/apt/sources.list
 
 log "apt update & upgrade, Install Package"
-
 apt update -y && apt upgrade -y
-
 cp $HOME/.zshrc $HOME/.zshrc.bak.$(date +%Y.%m.%d)
 
 info "For x11"
@@ -38,14 +35,12 @@ apt install -y proot-distro pulseaudio vim x11-repo && apt install -y termux-x11
 info "install zsh & Setting"
 
 log "Install oh-my-zsh"
-
 git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" --depth 1
 mv "$HOME/.zshrc" "$HOME/.zshrc.bak.$(date +%Y.%m.%d-%H:%M:%S)"
 cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc"
 
 log "Change theme to agnoster"
 sed -i 's/robbyrussell/agnoster/' ~/.zshrc
-
 
 log "plugin > zsh-syntax-highlighting"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting --depth 1
@@ -60,19 +55,14 @@ log "plugin > fzf"
 git clone https://github.com/junegunn/fzf.git ~/.fzf --depth 1
 ~/.fzf/install --all
 
-# Use plugins
 log "Use plugins"
-
 sed -i 's/(git)/(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions kubectl)/' ~/.zshrc
 
 log "Change shell to zsh"
-
 chsh -s zsh
 
 log "Copy git config"
-
 cp .gitconfig "$HOME"
 
 log "Change prompt_context"
-
-echo -e 'prompt_context() {\nif [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then\nprompt_segment black default "%(!.%{%F{yellow}%}.)$USER"\nfi\nemojis=("⚡️" "🔥" "🇰  " "👑" "😎" "🐸" "🐵" "🦄" "🌈" "🍻" "🚀" "💡" "🎉" "🔑" "🚦" "🌙")\nRAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))\nprompt_segment black default " [ KKus($USER) ] ${emojis[$RAND_EMOJI_N]} "\n}' >> ~/.zshrc
+echo -e '\nprompt_context() {\nif [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then\nprompt_segment black default "%(!.%{%F{yellow}%}.)$USER"\nfi\nemojis=("⚡️" "🔥" "🇰  " "👑" "😎" "🐸" "🐵" "🦄" "🌈" "🍻" "🚀" "💡" "🎉" "🔑" "🚦" "🌙")\nRAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))\nprompt_segment black default " [ KKus($(whoami)) ] ${emojis[$RAND_EMOJI_N]} "\n}' >> ~/.zshrc
