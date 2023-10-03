@@ -43,41 +43,36 @@ git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" --depth 1
 mv "$HOME/.zshrc" "$HOME/.zshrc.bak.$(date +%Y.%m.%d-%H:%M:%S)"
 cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc"
 
-# Change theme to agnoster
 log "Change theme to agnoster"
-
 sed -i 's/robbyrussell/agnoster/' ~/.zshrc
 
-# Install oh-my-zsh plugins
-info "Install oh-my-zsh plugins"
 
-log "zsh-syntax-highlighting"
+log "plugin > zsh-syntax-highlighting"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting --depth 1
 
-log "zsh-autosuggestions"
+log "plugin > zsh-autosuggestions"
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions --depth 1
 
-log "zsh-completions"
+log "plugin > zsh-completions"
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions --depth 1
 
-log "fzf"
+log "plugin > fzf"
 git clone https://github.com/junegunn/fzf.git ~/.fzf --depth 1
 ~/.fzf/install --all
 
 # Use plugins
-info "Use plugins"
+log "Use plugins"
 
-log "sed -i 's/(git)/(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions kubectl)/' ~/.zshrc"
 sed -i 's/(git)/(git zsh-autosuggestions zsh-syntax-highlighting zsh-completions kubectl)/' ~/.zshrc
 
-# Change shell to zsh
-info "Change shell to zsh"
+log "Change shell to zsh"
 
-log "chsh -s zsh"
 chsh -s zsh
 
-# Copy git config
-info "Copy git config"
+log "Copy git config"
 
-log "cp .gitconfig '$HOME'"
 cp .gitconfig "$HOME"
+
+log "Change prompt_context"
+
+echo -e 'prompt_context() {\nif [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then\nprompt_segment black default "%(!.%{%F{yellow}%}.)$USER"\nfi\nemojis=("⚡️" "🔥" "🇰  " "👑" "😎" "🐸" "🐵" "🦄" "🌈" "🍻" "🚀" "💡" "🎉" "🔑" "🚦" "🌙")\nRAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))\nprompt_segment black default " [ KKus($USER) ] ${emojis[$RAND_EMOJI_N]} "\n}' >> ~/.zshrc
