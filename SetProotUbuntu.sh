@@ -15,6 +15,7 @@ info "Package Update & Upgrade"
 apt update -y && apt upgrade -y
 
 apt install -y dialog apt-utils
+apt install -y psmisc htop software-properties-common wget mesa-utils dbus-x11 xfce4 xfce4-terminal xfce4-goodies sudo nano vim git tzdata
 
 info "Install Firefox"
 
@@ -43,6 +44,8 @@ info "Set User[ $_user ] Password"
 passwd $_user
 
 info "Connect User & Instal Package"
-su - $_user -c "apt install -y fcitx fcitx-hangul fonts-noto-cjk locales language-pack-ko fonts-nanum* fonts-roboto;echo -e '#!/bin/bash\n\nexport QT_IM_MODULE=fcitx\nexport GTK_IM_MODULE=fcitx\nexport XMODIFIER>
+su - $_user -c "apt install -y fcitx fcitx-hangul fonts-noto-cjk locales language-pack-ko fonts-nanum* fonts-roboto;
+echo -e '#!/bin/bash\n\nexport QT_IM_MODULE=fcitx\nexport GTK_IM_MODULE=fcitx\nexport XMODIFIERS=@im=fcitx\nexport DefaultIMModule=fcitx\n
+\n#optional\nfcitx-autostart &>/dev/null' > /etc/profile.d/fcitx.sh"
 
 info "Finished Set Ubuntu"
