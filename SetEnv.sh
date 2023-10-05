@@ -20,23 +20,23 @@ cp $HOME/.termux/termux.properties $HOME/.termux/termux.properties.bak.$(date +%
 
 cp ~/../usr/etc/apt/sources.list ~/../usr/etc/apt/sources.list.$(date +%Y.%m.%d)
 
-apt install -y nano git zsh screenfetch neofetch openssh sshpass net-tools htop wget
-echo -e "deb https://packages-cf.termux.dev/apt/termux-main stable main\ndeb https://packages-cf.termux.dev/apt/termux-root root stable\ndeb https://packages-cf.termux.dev/apt/termux-x11 x11 main" > ~/../usr/etc/apt/sources.list
-
 log "apt update & upgrade, Install Package"
 apt update -y && apt upgrade -y
+apt install -y nano git zsh screenfetch neofetch openssh sshpass net-tools htop wget proot-distro pulseaudio vim
+#echo -e "deb https://packages-cf.termux.dev/apt/termux-main stable main\ndeb https://packages-cf.termux.dev/apt/termux-root root stable\ndeb https://packages-cf.termux.dev/apt/termux-x11 x11 main" > ~/../usr/etc/apt/sources.list
+
 cp $HOME/.zshrc $HOME/.zshrc.bak.$(date +%Y.%m.%d)
 
 info "For x11"
 
 log "Install Package"
-apt install -y proot-distro pulseaudio vim x11-repo && apt install -y termux-x11-nightly xwayland xorg-server-xvfb
+apt install -y x11-repo && apt install -y termux-x11-nightly xwayland xorg-server-xvfb
 
 info "install zsh & Setting"
 
 log "Install oh-my-zsh"
 git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh" --depth 1
-mv "$HOME/.zshrc" "$HOME/.zshrc.bak.$(date +%Y.%m.%d-%H:%M:%S)"
+mv "$HOME/.zshrc" "$HOME/.zshrc.bak.$(date +%Y.%m.%d)" #-%H:%M:%S)"
 cp "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc"
 
 log "Change theme to agnoster"
