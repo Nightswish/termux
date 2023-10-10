@@ -13,6 +13,11 @@ warning () { echo -e "${YELLOW}${*}${NC}";:; }
 info    () { echo -e "${GREEN}======";echo -e "# ${*}";echo -e "======${NC}";:; }
 log     () { echo -e "${CYAN}${*}${NC}";:; }
 
+info "Set Termux external Storage"
+termux-setup-storage
+
+sleep 1
+
 info "Set repository & Package"
 #mv "$HOME/.termux" "$HOMW/.termux.bak.$(date +%Y.%m.%d)" #-%H:%M
 #cp -R ./.termux $HOME/.termux
